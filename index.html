@@ -1,30 +1,31 @@
-<!DOCTYPE html>
-<html lang="pt" ng-app="listaTelefonica">
+<html ng-app="listaTelefonica">
 <head>
-   <link rel="stylesheet" href="bootstrap.css">
-   <link rel="stylesheet" href="lista.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Telefonica</title>
+	<meta charset="UTF-8">
+	<title>Lista Telefonica</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="lista.css">
+	
 </head>
 <body ng-controller="listaTelefonicaController">
-
-    <div class="jumbotron">
-        <h4>{{app}}</h4>
-        <table class="table table-striped">
-            <tr>
-                <th>Nome</th>
-                <th>telefone</th>
-            </tr>
-            <tr ng-repeat="contato in contatos">
-                <td>{{contato.nome}}</td>
-                <td>{{contato.telefone}}</td>
-            </tr>
-
-        </table>
-    </div>
-
-    <script src="angular.min.js"></script>
-    <script src="app.js"></script>
+	<div class="jumbotron">
+		<h3>{{app}}</h3>
+		<table class="table table-striped">
+			<tr>
+				<th>Nome</th>
+				<th>Telefone</th>
+			</tr>
+			<tr ng-repeat="contato in contatos">
+				<td>{{contato.nome}}</td>
+				<td>{{contato.telefone}}</td>
+			</tr>
+		</table>
+		<hr/>
+		<input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
+		<input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
+		<button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)">Adicionar Contato</button>
+		
+	</div>
+	<script src="angular.min.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
