@@ -13,3 +13,11 @@
 .form-control {
     margin-bottom: 5px;
 }
+
+.selecionado {
+    background-color: yellow;
+}
+td div {
+    width: 20px;
+    height: 20px;
+}
