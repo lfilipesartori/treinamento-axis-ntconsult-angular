@@ -2,28 +2,29 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Lista Telefonica</title>
-	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="lista.css">
 	
 </head>
 <body ng-controller="listaTelefonicaController">
 	<div class="jumbotron">
 		<h3>{{app}}</h3>
+		<input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
 		<table ng-show="contatos.length > 0" class="table">
 			<tr>
 				<th></th>
-				<th>Nome</th>
-				<th>Telefone</th>
-				<th>operadora</th>
-				<th></th>
+				<th><a href="" ng-click="ordenarPor('nome')">Nome</a></th>
+				<th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
+				<th>Operadora</th>
+				<th>Data</th>
 			</tr>
 
-			<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos">
+			<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
 				<td><input type="checkbox" ng-model = "contato.selecionado"/></td>
-				<td>{{contato.nome}}</td>
+				<td>{{contato.nome | uppercase}}</td>
 				<td>{{contato.telefone}}</td>
-				<td>{{contato.operadora.nome}}</td>
-				<td><div ng-style="{'background-color': contato.cor}"></div></td>
+				<td>{{contato.operadora.nome | lowercase}}</td>
+				<td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
 			</tr>
 
 		</table>
@@ -32,16 +33,16 @@
 		<form name="contatoForm">
 			<input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="10"/>
 			<input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/"/>
-			<select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+			<select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' )' group by operadora.categoria for operadora in operadoras">
 				<option value="">Selecione uma operadora</option>
 			</select>
 		</form>
 
-		<div ng-messages="contatoForm.nome.$error" class="alert alert-danger">
-			<div ng-message="required">
+		<div ng-show="contatoForm.nome.$dirty" ng-messages="contatoForm.nome.$error">
+			<div ng-message="required" class="alert alert-danger">
 				Por favor, preencha o campo nome!
 			</div>
-			<div ng-message="minlength">
+			<div ng-message="minlength" class="alert alert-danger">
 				O campo nome deve ter no mínimo 10 caracteres.
 			</div>
 		</div>
@@ -57,8 +58,9 @@
 		<button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar Contatos</button>
 
 	</div>
-	<script src="angular.min.js"></script>
+	<script src="Js/angular.min.js"></script>
 	<script src="app.js"></script>
-	<script src="angular-messages.js"></script>
+	<script src="Js/angular-messages.js"></script>
+	<script src="Js/angular-locale_pt-br.js"></script>
 </body>
-</html> 
+</html>      
